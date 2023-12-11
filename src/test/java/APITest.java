@@ -1,5 +1,6 @@
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -17,6 +18,7 @@ public class APITest {
         RestAssured.baseURI = "https://demoqa.com/BookStore/v1/";
     }
 
+    @DisplayName("Проверка на отсутствие книги")
     @Test
     public void bookNotFoundTest() {
         given().when()
@@ -29,6 +31,7 @@ public class APITest {
                 .body("message", equalTo("ISBN supplied is not available in Books Collection!"));
     }
 
+    @DisplayName("Получения подробной информации о книге по ее идентификационному номеру")
     @Test
     public void testSuccessStatus() {
         given()
@@ -38,11 +41,12 @@ public class APITest {
                 .log().all()
                 .statusCode(200)
                 .body("title", equalTo("Git Pocket Guide"))
-                .body("pages", equalTo("234"));
+                .body("pages", equalTo(234));
     }
 
 
-    @Test
+    @DisplayName("Проверка получения статус кода, после авторизации")
+    @Test()
     public void bookTest() {
         String userName = "Petoto";
         String password = "GaGaga!1";
